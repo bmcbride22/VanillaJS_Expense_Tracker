@@ -1,0 +1,84 @@
+// Select Elements
+const balance = document.getElementById("balance");
+const money_income = document.getElementById("money__income");
+const money_expense = document.getElementById("money__expense");
+const list = document.getElementById("list");
+const form = document.getElementById("new-transaction");
+const message = document.getElementById("text");
+const amount = document.getElementById("amount");
+
+// Initialize dummy transactions to display
+const dummyTransactions = [
+  { id: 1, message: "Flowers", amount: -20 },
+  { id: 2, message: "Salary", amount: 300 },
+  { id: 3, message: "Book", amount: -10 },
+  { id: 4, message: "Camera", amount: -150 },
+  { id: 5, message: "Transfer", amount: 75 },
+];
+
+//////////////////////////////////////////////////////
+//
+//     FUNCTIONS
+//
+//////////////////////////////////////////////////////
+
+// Initialize transactions list variable with dummy objects
+let transactions = dummyTransactions;
+
+// Add transactions to DOM list
+function addTransactionDOM(transaction) {
+  // Determine Income / Expense
+  const sign = transaction.amount > 0 ? "+" : "-";
+  const listItem = document.createElement("li");
+  // Add class based on value
+  listItem.classList.add("transaction");
+  listItem.classList.add(
+    sign == "+" ? "transaction__income" : "transaction__expense"
+  );
+
+  listItem.innerHTML = `${transaction.message}
+	<span class="transaction__amount
+	amount__${sign == "+" ? "income" : "expense"}">
+	${sign}$${Math.abs(transaction.amount)}</span>
+	<button class="btn__delete">x</button>`;
+
+  list.appendChild(listItem);
+}
+
+// Init
+function init() {
+  //Reset the HTML for the transaction list
+  list.innerHTML = "";
+  // transactions.forEach((transaction) => addTransactionDOM(transaction));\
+  // Add all transactions to the transaction list
+  transactions.forEach(addTransactionDOM);
+  // Update totals for Balance, Income and Expenses
+  updateValues();
+}
+
+// Update the balance, income, and expense values
+function updateValues() {
+  const currentAmounts = transactions.map((transaction) => transaction.amount);
+  const transactionsSum = currentAmounts
+    .reduce((acc, cur) => (acc += cur), 0)
+    .toFixed(2);
+
+  const totalIncome = currentAmounts
+    .filter((transaction) => transaction > 0)
+    .reduce((acc, cur) => (acc += cur), 0)
+    .toFixed(2);
+
+  const totalExpenses = currentAmounts
+    .filter((transaction) => transaction < 0)
+    .reduce((acc, cur) => (acc += cur), 0)
+    .toFixed(2);
+
+  balance.innerText = `${transactionsSum > 0 ? "+" : "-"}$${transactionsSum}`;
+  money_income.innerText = `${totalIncome > 0 ? "+" : "-"}$${totalIncome}`;
+  money_expense.innerText = `${totalExpenses > 0 ? "+" : "-"}$${Math.abs(
+    totalExpenses
+  ).toFixed(2)}`;
+}
+
+//Init App
+init();

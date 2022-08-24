@@ -3,6 +3,8 @@
 
 :root {
   --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0.24);
+  --color-expense: #e6452ddc;
+  --color-income: #459e2de4;
 }
 
 * {
@@ -66,11 +68,11 @@ h4 {
 }
 
 .money__income {
-  color: #75d05ccb;
+  color: var(--color-income);
 }
 
 .money__expense {
-  color: #e6452ddc;
+  color: var(--color-expense);
 }
 
 label {
@@ -108,10 +110,10 @@ label {
   top: 50%;
   right: 0;
   transform: translate(150%, -50%);
-  background-color: #e6452ddc;
+  background-color: var(--color-expense);
   color: #f7f7f7;
   opacity: 0;
-  transition: opacity 0.2s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 
 .list {
@@ -133,11 +135,17 @@ label {
 }
 
 .amount__expense {
-  color: #e6452ddc;
+  color: var(--color-expense);
+}
+.amount__income {
+  color: var(--color-income);
 }
 
 .transaction__expense {
-  border-right: 5px solid #e6452ddc;
+  border-right: 5px solid var(--color-expense);
+}
+.transaction__income {
+  border-right: 5px solid var(--color-income);
 }
 
 .list li:hover .btn__delete,
