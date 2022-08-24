@@ -23,14 +23,11 @@ const dummyTransactions = [
 //////////////////////////////////////////////////////
 
 // Initialize transactions list variable with dummy objects
-
-let transactions = dummyTransactions;
-
-// const localStorageTransactions = JSON.parse(
-//   localStorage.getItem("transactions")
-// );
-// let transactions =
-//   localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
+const localStorageTransactions = JSON.parse(
+  localStorage.getItem("transactions")
+);
+let transactions =
+  localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
 
 // Add transactions to DOM list
 function addTransactionDOM(transaction) {
@@ -70,6 +67,7 @@ function addTransaction(e) {
   transactions.push(transaction);
   addTransactionDOM(transaction);
   updateValues();
+  updateLocalStorage();
   message.value = "";
   amount.value = "";
 }
@@ -77,6 +75,11 @@ function addTransaction(e) {
 
 function randomID() {
   return Math.floor(Math.random() * 100000000);
+}
+
+// Update local storage transactions
+function updateLocalStorage() {
+  localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
 // Init
@@ -94,6 +97,7 @@ function init() {
 function removeTransaction(id) {
   transactions = transactions.filter((transaction) => transaction.id !== id);
   init();
+  updateLocalStorage();
 }
 
 // Update the balance, income, and expense values
