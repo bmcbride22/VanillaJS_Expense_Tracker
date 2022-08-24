@@ -15,30 +15,37 @@
       <div class="container__inc-exp">
         <div class="container__income">
           <h4 class="title__income">Income</h4>
-          <p id="money__income" class="money income">+$0.00</p>
+          <p id="money__income" class="money income money__income">+$0.00</p>
         </div>
         <div class="container__expense">
           <h4 class="title__expense">Expenses</h4>
-          <p id="money-expense" class="money expense">-$0.00</p>
+          <p id="money__expense" class="money expense money__expense">-$0.00</p>
         </div>
       </div>
       <h3 class="title__history">History</h3>
       <ul id="list" class="list">
-        <li class="expense">
+        <!-- List items will be added using JS, HTML left for reference -->
+        <!-- <li class="transaction transaction__expense">
           Cash
-          <span class="transaction">-$400</span>
+          <span class="transaction__amount amount__expense">-$400</span>
           <button class="btn__delete">X</button>
-        </li>
+        </li> -->
       </ul>
       <h3 class="title__new-transaction">Add New Transaction</h3>
       <form action="#" id="new-transaction">
         <div class="form-control">
           <label for="text">Text</label>
-          <input type="text" id="text" placeholder="Enter message..." />
+          <input
+            class="input__message"
+            type="text"
+            id="text"
+            placeholder="Enter message..."
+          />
         </div>
         <div class="form-control">
-          <label for="amount">Amount <br />( +/- --> Income/Expense )</label>
+          <label for="amount">Amount ( +/- --> Income/Expense )</label>
           <input
+            class="input__amount"
             type="number"
             id="amount"
             placeholder="Enter Transaction Amount..."
