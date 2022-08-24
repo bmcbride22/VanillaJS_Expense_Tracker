@@ -23,7 +23,14 @@ const dummyTransactions = [
 //////////////////////////////////////////////////////
 
 // Initialize transactions list variable with dummy objects
+
 let transactions = dummyTransactions;
+
+// const localStorageTransactions = JSON.parse(
+//   localStorage.getItem("transactions")
+// );
+// let transactions =
+//   localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
 
 // Add transactions to DOM list
 function addTransactionDOM(transaction) {
@@ -40,9 +47,36 @@ function addTransactionDOM(transaction) {
 	<span class="transaction__amount
 	amount__${sign == "+" ? "income" : "expense"}">
 	${sign}$${Math.abs(transaction.amount)}</span>
-	<button class="btn__delete">x</button>`;
+	<button class="btn__delete" onclick="removeTransaction(${
+    transaction.id
+  })">x</button>`;
 
   list.appendChild(listItem);
+}
+
+// Add user submitted transaction to the transactions array
+function addTransaction(e) {
+  e.preventDefault();
+
+  if (message.value.trim() === "" || amount.value.trim() === "") {
+    alert("Please add a message and transaction amount before submitting");
+  }
+
+  const transaction = {
+    id: randomID(),
+    message: message.value,
+    amount: +amount.value,
+  };
+  transactions.push(transaction);
+  addTransactionDOM(transaction);
+  updateValues();
+  message.value = "";
+  amount.value = "";
+}
+// Generate Random transaction id
+
+function randomID() {
+  return Math.floor(Math.random() * 100000000);
 }
 
 // Init
@@ -56,9 +90,16 @@ function init() {
   updateValues();
 }
 
+// Remove transaction by id
+function removeTransaction(id) {
+  transactions = transactions.filter((transaction) => transaction.id !== id);
+  init();
+}
+
 // Update the balance, income, and expense values
 function updateValues() {
   const currentAmounts = transactions.map((transaction) => transaction.amount);
+  console.log(currentAmounts);
   const transactionsSum = currentAmounts
     .reduce((acc, cur) => (acc += cur), 0)
     .toFixed(2);
@@ -79,6 +120,20 @@ function updateValues() {
     totalExpenses
   ).toFixed(2)}`;
 }
+
+//////////////////////////////////////////////////////
+//
+//     Event Listeners
+//
+//////////////////////////////////////////////////////
+
+form.addEventListener("submit", addTransaction);
+
+//////////////////////////////////////////////////////
+//
+//     Main Script
+//
+//////////////////////////////////////////////////////
 
 //Init App
 init();
